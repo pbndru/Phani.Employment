@@ -3,6 +3,7 @@ using Phani.Employment.API.Data.Models;
 using Phani.Employment.API.Data.Service;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Phani.Employment.Test
@@ -117,6 +118,41 @@ namespace Phani.Employment.Test
 
             //Assert
             Assert.IsType<BadRequestObjectResult>(badResponse);
+        }
+
+        [Theory]
+        [InlineData("9d81a1e5-a7fa-45b5-8d17-80b4b9717864")]
+        public void RemoveEmployeeByIdTest(string guid)
+        {
+            //Arrange
+            var validGuid = new Guid(guid);
+
+            //Act
+            var result = _service.GetAll();
+
+            //Assert
+            Assert.Equal(4, result.Count());
+
+            //Act
+            var okResult = _controller.Remove(validGuid);
+
+            //Assert
+            Assert.IsType<OkResult>(okResult);
+            Assert.Equal(3, _service.GetAll().Count());
+        }
+
+        [Theory]
+        [InlineData("9981a1e5-a7fa-45b5-8d17-80b4b9717864")]
+        public void RemoveEmployeeByIncorrectIdTest(string guid)
+        {
+            //Arrange
+            var invalidGuid = new Guid(guid);
+
+            //Act
+            var notFoundResult = _controller.Remove(invalidGuid);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(notFoundResult);
         }
     }
 }
