@@ -37,7 +37,7 @@ namespace Phani.Employment.API.Data.Service
                 new Employee()
                 {
                     Id =  new Guid("016d62ca-deab-4340-90ad-f357eb7c09cb"),
-                    Title = "DevOPs Selfish Gene",
+                    Title = "DevOPs",
                     Description = "DevOPs",
                     Name = "DevOPs"
                 }
